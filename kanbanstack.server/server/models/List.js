@@ -6,7 +6,7 @@ const List = new Schema(
   {
     title: { type: String, required: true },
     boardId: { type: ObjectId, ref: 'List', required: true },
-    creatorId: { type: ObjectId, ref: 'Account', required: true }
+    creatorId: { type: String, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
