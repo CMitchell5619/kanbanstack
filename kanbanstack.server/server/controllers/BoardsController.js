@@ -8,9 +8,9 @@ export class BoardsController extends BaseController {
     super('api/boards')
     this.router
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id/lists', this.getAllListsByBoardId)
+      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .delete('/:id', this.delete)
       .get('/:id', this.getOne)
