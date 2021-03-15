@@ -5,8 +5,8 @@ const ObjectId = mongoose.SchemaTypes.ObjectId
 const Comment = new Schema(
   {
     description: { type: String, required: true },
-    taskId: { type: ObjectId, ref: 'Post', required: true },
-    creatorId: { type: String, ref: 'Account', required: true }
+    taskId: { type: ObjectId, ref: 'Comment', required: true },
+    creatorId: { type: ObjectId, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )

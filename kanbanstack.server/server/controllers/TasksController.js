@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { tasksService } from '../services/TasksService'
+import { commentsService } from '../services/CommentsService'
 
 export class TasksController extends BaseController {
   constructor() {
@@ -9,6 +10,8 @@ export class TasksController extends BaseController {
     // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
+      .get('/:id/comments', this.getAllCommentsByTaskId)
+
       .post('', this.create)
       .delete('/:id', this.delete)
       .get('/:id', this.getOne)
@@ -42,6 +45,14 @@ export class TasksController extends BaseController {
   async getOne(req, res, next) {
     try {
       return res.send(await tasksService.findById(req.params.id))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getAllCommentsByTaskId(req, res, next) {
+    try {
+      res.send(await commentsService.find({ taskId: req.params.id }))
     } catch (error) {
       next(error)
     }

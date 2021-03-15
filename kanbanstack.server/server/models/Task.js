@@ -5,8 +5,8 @@ const ObjectId = mongoose.SchemaTypes.ObjectId
 const Task = new Schema(
   {
     body: { type: String, required: true },
-    listId: { type: ObjectId, ref: 'Post', required: true },
-    creatorId: { type: String, ref: 'Account', required: true }
+    listId: { type: ObjectId, ref: 'Task', required: true },
+    creatorId: { type: ObjectId, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
