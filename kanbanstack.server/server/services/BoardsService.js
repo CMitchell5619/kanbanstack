@@ -2,9 +2,12 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
 
 class BoardsService {
-  async find(query = {}) {
-    const boards = await dbContext.Boards.find(query)
-    return boards
+  async create(body) {
+    return await dbContext.Boards.create(body)
+  }
+
+  async delete(id) {
+    return await dbContext.Boards.findByIdAndDelete(id)
   }
 
   async findById(id) {
@@ -13,6 +16,10 @@ class BoardsService {
       throw new BadRequest('Invalid Id')
     }
     return board
+  }
+
+  async find(query = {}) {
+    return await dbContext.Boards.find(query)
   }
 }
 
