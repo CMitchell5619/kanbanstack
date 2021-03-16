@@ -2,10 +2,10 @@ import { api } from './AxiosService'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 
-export default class BoardService {
-  async getAllBoards() {
+export default class ListsService {
+  async getAllLists() {
     try {
-      const res = await api.get('api/boards')
+      const res = await api.get('api/lists')
       console.log(res)
       AppState.boards = res.data
     } catch (error) {
@@ -13,15 +13,15 @@ export default class BoardService {
     }
   }
 
-  async getBoardById(id) {
+  async createList(newList) {
     try {
-      const res = await api.get('api/boards/' + id)
-      logger.log(res)
-      AppState.activeBoard = res.data
+      const res = await api.post('api/lists', newList)
+      AppState.lists.push(res.data)
+      return res.data._id
     } catch (error) {
       logger.error(error)
     }
   }
 }
 
-export const boardService = new BoardService()
+export const listsService = new ListsService()
