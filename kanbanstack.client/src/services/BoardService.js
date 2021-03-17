@@ -13,6 +13,16 @@ export default class BoardService {
     }
   }
 
+  async createBoard(newBoard) {
+    try {
+      const res = await api.post('api/boards', newBoard)
+      AppState.boards.push(res.data)
+      return res.data._id
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
   async getBoardById(id) {
     try {
       const res = await api.get('api/boards/' + id)

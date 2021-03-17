@@ -5,18 +5,15 @@
         <h3 class="text-center">
           {{ state.board.title }}
         </h3>
-        <span v-if="state.board.creator">
-          <button type="button"
-                  class="btn btn-danger"
-                  @click="deleteBoard"
-                  v-if="state.board.creator.email == state.user.email"
-          >
-            Delete Board
-          </button>
-        </span>
-        <span v-if="state.board.imgUrl">
-          <img class="img-fluid" :src="state.board.imgUrl" alt="">
-        </span>
+
+        <button type="button"
+                class="btn btn-danger"
+                @click="deleteBoard"
+        >
+          Delete Board
+        </button>
+
+        <img class="img-fluid" :src="state.board.imgUrl" alt="">
         <p class="p-4">
           {{ state.board.body }}
         </p>
@@ -41,9 +38,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 p-3">
-        <List v-for="listData in state.lists" :key="listData.id" :list="listData" />
-      </div>
+      <List v-for="listData in state.lists" :key="listData.id" :list="listData" />
     </div>
   </div>
 </template>
@@ -57,18 +52,21 @@ import List from '../components/List'
 
 export default {
   name: 'BoardDetailsPage',
+  props: {
+    board: { type: Object, required: true }
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
     const state = reactive({
       newList: {},
       board: computed(() => AppState.activeBoard),
-      lists: computed(() => AppState.lists),
+      lists: computed(() => AppState.lists.filter((l) => l.boardId === state.board.id)),
       user: computed(() => AppState.user)
     })
     onMounted(() => {
       // boardService.getAllBoards(route.params.id)
-      listsService.getAllLists(route.params.id)
+      listsService.getAllListsById(route.params.id)
       boardService.getBoardById(route.params.id)
     })
     onBeforeRouteLeave((to, from, next) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="board col-6 mt-4">
+  <div class="board col-4 mt-4">
     <router-link :to="{name: 'BoardDetailsPage', params: {id: board.id}}">
       <div class="card text-center" style="width: 18rem; height: 25rem;">
         <div class="card-body">
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Board',
   props: {

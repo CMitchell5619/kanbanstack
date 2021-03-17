@@ -3,11 +3,11 @@ import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 
 export default class ListsService {
-  async getAllLists() {
+  async getAllListsById(id) {
     try {
-      const res = await api.get('api/lists')
+      const res = await api.get('api/boards/' + id + '/lists')
       console.log(res)
-      AppState.boards = res.data
+      AppState.lists = res.data
     } catch (error) {
       logger.error(error)
     }
