@@ -1,15 +1,22 @@
 <template>
   <div class="task">
-    <div class="col-12 p-3">
-      <div class="card text-center" style="width: 18rem; height: 25rem;">
-        {{ task.body }}
-      </div>
-    </div>
+    <li class="d-flex list-group-item justify-content-between align-items-center shadow">
+      {{ task.body }}
+      <button class="btn btn-primary" data-toggle="modal" :data-target="'#taskModal' + task.id">
+        <!-- onclick link instead -->
+        Task Modal
+      </button>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
+    <!-- <TaskModal :task="task" /> -->
   </div>
 </template>
 
 <script>
 import { reactive, onMounted } from 'vue'
+// import TaskModal from '../components/TaskModule'
 
 export default {
   props: {
@@ -26,7 +33,9 @@ export default {
       state
     }
   },
-  components: {}
+  components: {
+    // TaskModal
+  }
 }
 </script>
 
