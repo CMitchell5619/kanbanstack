@@ -6,31 +6,84 @@
         <!-- onclick link instead -->
         Task Modal
       </button>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="close" aria-label="Close">
+        <span @click="deleteTask()" aria-hidden="true">&times;</span>
       </button>
+      <label for="lists">Choose a list:</label>
+
+      <select @change="changeListIdForTask" id="lists" v-model="state.newListId">
+        <option v-for="list in state.lists" :key="list.id" :value="list.id">
+          {{ list.title }}
+        </option>
+      </select>
+
+      <!-- <span><div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+        >
+          Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+          <div v-for="list in state.lists" :key="list.id ">
+            {{ list }}
+          </div>
+        </div>
+
+      </div></span> -->
     </li>
-    <!-- <TaskModal :task="task" /> -->
+    <TaskModal :task="task" />
   </div>
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { computed, reactive } from 'vue'
+import { tasksService } from '../services/TasksServices'
+import { logger } from '../utils/Logger'
+import { commentsService } from '../services/CommentsService'
+import { AppState } from '../AppState'
 // import TaskModal from '../components/TaskModule'
 
 export default {
   props: {
     task: { type: Object, required: true }
   },
-  setup() {
+  setup(props) {
     const state = reactive({
-
-    })
-    onMounted(() => {
-      // commentService.getAllCommentsById(route.params.id)
+      newListId: '',
+      activeTask: {},
+      lists: computed(() => AppState.lists)
     })
     return {
-      state
+      state,
+      async changeListIdForTask() {
+        try {
+          await tasksService.changeListIdForTask(props.task, state.newListId)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async getAllCommentsById(activeTask) {
+        try {
+          AppState.activeTask = props.task
+          await commentsService.getAllCommentsById(activeTask)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async deleteTask() {
+        try {
+          await tasksService.deleteTask(props.task)
+        } catch (error) {
+          logger.error(error)
+        }
+      }
     }
   },
   components: {

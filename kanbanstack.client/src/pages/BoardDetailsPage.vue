@@ -82,7 +82,7 @@ export default {
         state.newList = {}
       },
       async deleteBoard() {
-        await boardService.deleteBoard(state.board.id)
+        await boardService.deleteActiveBoard(AppState.activeBoard.id)
         router.push({ name: 'Home' })
       }
     }

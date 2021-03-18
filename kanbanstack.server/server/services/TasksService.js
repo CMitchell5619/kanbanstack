@@ -21,6 +21,16 @@ class TasksService {
   async find(query = {}) {
     return await dbContext.Tasks.find(query)
   }
+
+  async edit(id, update) {
+    const task = await dbContext.Tasks.findOneAndUpdate({ _id: id }, update, {
+      new: true
+    })
+    if (!task) {
+      throw new BadRequest('Invalid ID')
+    }
+    return task
+  }
 }
 
 export const tasksService = new TasksService()

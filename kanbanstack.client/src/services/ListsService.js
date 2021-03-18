@@ -22,6 +22,15 @@ export default class ListsService {
       logger.error(error)
     }
   }
+
+  async deleteList(list) {
+    try {
+      await api.delete('api/lists/' + list._id)
+      this.getAllListsById(list.boardId)
+    } catch (error) {
+      logger.log(error)
+    }
+  }
 }
 
 export const listsService = new ListsService()

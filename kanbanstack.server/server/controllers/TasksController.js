@@ -15,16 +15,8 @@ export class TasksController extends BaseController {
       .post('', this.create)
       .delete('/:id', this.delete)
       .get('/:id', this.getOne)
-    // .put('/:id', this.edit)
+      .put('/:id', this.edit)
   }
-
-  // async edit(req, res, next) {
-  //   try {
-  //     res.send(await tasksService.edit(req.params.id, req.body))
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
 
   async delete(req, res, next) {
     try {
@@ -63,6 +55,15 @@ export class TasksController extends BaseController {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorId = req.userInfo.id
       res.send(201, await tasksService.create(req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async edit(req, res, next) {
+    try {
+      const data = await tasksService.edit(req.params.id, req.body)
+      return res.send(data)
     } catch (error) {
       next(error)
     }

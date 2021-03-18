@@ -32,6 +32,14 @@ export default class BoardService {
       logger.error(error)
     }
   }
+
+  async deleteActiveBoard(id) {
+    try {
+      await api.delete('api/boards/' + id)
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 
 export const boardService = new BoardService()
