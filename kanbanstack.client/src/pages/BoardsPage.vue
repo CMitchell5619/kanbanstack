@@ -38,6 +38,7 @@ export default {
     // const router = useRouter()
     const state = reactive({
       boards: computed(() => AppState.boards),
+      user: computed(() => AppState.user),
       newBoard: {}
     })
     onMounted(() => {

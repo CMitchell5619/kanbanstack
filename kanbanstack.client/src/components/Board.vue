@@ -1,20 +1,25 @@
 <template>
   <div class="board col-4 mt-4">
-    <router-link :to="{name: 'BoardDetailsPage', params: {id: board.id}}">
-      <div class="card text-center" style="width: 18rem; height: 25rem;">
-        <div class="card-body">
+    <div class="card text-center" style="width: 18rem; height: 25rem;">
+      <button type="button" class="close" @click="deleteActiveBoard" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="card-body">
+        <router-link :to="{name: 'BoardDetailsPage', params: {id: board.id}}">
           <h5 class="card-title bg-secondary">
             {{ board.title }}
           </h5>
-          <p class="card-text"></p>
-        </div>
+        </router-link>
+        <p class="card-text"></p>
       </div>
-    </router-link>
+    </div>
   <!--collaborators on bottom of board card?-->
   </div>
 </template>
 
 <script>
+
+import boardService from '../services/BoardService'
 
 export default {
   name: 'Board',
@@ -22,8 +27,11 @@ export default {
     // eslint-disable-next-line vue/require-default-prop
     board: Object
   },
-  setup() {
+  setup(props) {
     return {
+      async deleteList() {
+        await boardService.deleteActiveBoard(props.board.id)
+      }
     }
   },
   components: {}

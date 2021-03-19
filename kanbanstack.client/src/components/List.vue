@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <div class="col-3 p-3">
-      <div class="card" style="width: 18rem; height: 55rem;">
+      <div class="card" style="width: 25rem; height: 45rem;">
         <div class="card-body">
           <h4 class="card-title">
             <div class="row">

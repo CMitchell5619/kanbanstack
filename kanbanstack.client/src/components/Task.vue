@@ -1,40 +1,20 @@
 <template>
   <div class="task">
-    <li class="d-flex list-group-item justify-content-between align-items-center shadow">
-      {{ task.body }}
-      <button class="btn btn-primary" data-toggle="modal" :data-target="'#taskModal' + task.id">
-        <!-- onclick link instead -->
-        Task Modal
-      </button>
+    <li class="d-flex list-group-item justify-content-between align-items-center shadow-sm">
+      <span class="task-title" data-toggle="modal" :data-target="'#taskModal' + task.id">
+        {{ task.body }}
+      </span>
+
       <button type="button" class="close" aria-label="Close">
         <span @click="deleteTask()" aria-hidden="true">&times;</span>
       </button>
-      <label for="lists">Choose a list:</label>
+      <label for="lists">List:</label>
 
       <select @change="changeListIdForTask" id="lists" v-model="state.newListId">
         <option v-for="list in state.lists" :key="list.id" :value="list.id">
           {{ list.title }}
         </option>
       </select>
-
-      <!-- <span><div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-        >
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-          <div v-for="list in state.lists" :key="list.id ">
-            {{ list }}
-          </div>
-        </div>
-
-      </div></span> -->
     </li>
     <TaskModal :task="task" />
   </div>
@@ -93,5 +73,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.task-title {
+  cursor: pointer;
+}
 
 </style>
