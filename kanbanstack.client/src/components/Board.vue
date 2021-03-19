@@ -1,7 +1,7 @@
 <template>
   <div class="board col-4 mt-4">
     <div class="card text-center" style="width: 18rem; height: 25rem;">
-      <button type="button" class="close" @click="deleteActiveBoard" aria-label="Close">
+      <button type="button" class="close" @click="deleteBoard" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
       <div class="card-body">
@@ -20,6 +20,8 @@
 <script>
 
 import boardService from '../services/BoardService'
+import { AppState } from '../AppState'
+import { reactive, computed } from 'vue'
 
 export default {
   name: 'Board',
@@ -27,10 +29,13 @@ export default {
     // eslint-disable-next-line vue/require-default-prop
     board: Object
   },
-  setup(props) {
+  setup() {
+    const state = reactive({
+      board: computed(() => AppState.boards)
+    })
     return {
-      async deleteList() {
-        await boardService.deleteActiveBoard(props.board.id)
+      async deleteBoard() {
+        await boardService.deleteBoard(state.board.id)
       }
     }
   },

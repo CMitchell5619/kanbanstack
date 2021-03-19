@@ -40,6 +40,10 @@ export default class BoardService {
       logger.error(error)
     }
   }
+
+  async deleteBoard(board) {
+    await api.delete('api/boards/' + board.id)
+  }
 }
 
 export const boardService = new BoardService()

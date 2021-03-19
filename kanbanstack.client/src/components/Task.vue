@@ -1,6 +1,6 @@
 <template>
   <div class="task">
-    <li class="d-flex list-group-item justify-content-between align-items-center shadow-sm">
+    <li class="shadow-sm">
       <span class="task-title" data-toggle="modal" :data-target="'#taskModal' + task.id">
         {{ task.body }}
       </span>
